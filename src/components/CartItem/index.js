@@ -14,6 +14,7 @@ const CartItem = ({cartItemDetails}) => {
     dishCurrency,
     dishPrice,
   } = cartItemDetails
+
   const {
     incrementCartItemQuantity,
     decrementCartItemQuantity,
