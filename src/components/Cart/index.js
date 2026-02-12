@@ -34,6 +34,7 @@ const Cart = () => {
           type="button"
           className="remove-all-btn text-primary"
           onClick={removeAllCartItems}
+          data-testid="cart"
         >
           Remove All
         </button>

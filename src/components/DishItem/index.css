@@ -2,6 +2,8 @@
   border: 1px solid gray;
   border-radius: 12px;
   justify-content: space-between;
+  margin-bottom: 3px;
+  padding: 3px;
 }
 
 .veg-border {
@@ -83,6 +85,7 @@
   font-weight: 500;
   font-size: 18px;
   margin: 5px 0;
+  color: red;
 }
 
 .addon-availability-text {
@@ -90,6 +93,7 @@
   font-size: 18px;
   margin: 5px 0;
   color: #734ff4;
+  margin-bottom: 0px;
 }
 
 .dish-calories {
@@ -99,6 +103,7 @@
   font-family: 'Roboto';
   font-size: 18px;
   align-self: center;
+  color: yellow;
 }
 
 .dish-image {

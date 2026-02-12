@@ -10,3 +10,210 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Main Screen */
+.app-screen {
+  min-height: 100vh;
+  background-image: url('https://res.cloudinary.com/daa0trmzd/image/upload/v1765443982/generated-image_2_qkjgcw.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #06142e; /* deep blue */
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  padding-bottom: 30px;
+  position: relative;
+}
+
+/* ❄️ Snowfall */
+.snow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.snow span {
+  position: absolute;
+  top: -10px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.9;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+/* 🎅 Intro Card */
+.intro-card {
+  background: #ffffff;
+  width: 360px;
+  padding: 25px;
+  margin: 40px auto;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+}
+
+.title {
+  color: #b91c1c;
+}
+
+/* Inputs */
+.input-box {
+  width: 260px;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 2px solid #dc2626;
+  outline: none;
+}
+
+/* Buttons */
+.start-btn {
+  padding: 10px 20px;
+  background: #16a34a;
+  color: #ffffff;
+  border-radius: 12px;
+  font-size: 18px;
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.glow {
+  animation: glowAnim 1.5s infinite alternate;
+}
+
+@keyframes glowAnim {
+  from {
+    box-shadow: 0 0 10px gold;
+  }
+  to {
+    box-shadow: 0 0 25px red;
+  }
+}
+
+/* 🎮 Game Area */
+.game-area {
+  margin-top: 20px;
+}
+
+.track-title {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 28px;
+  font-weight: 700;
+
+  /* Christmas red text */
+  color: #d60000;
+
+  /* White curved background */
+  background-color: #ffffff;
+  border-radius: 30px;
+
+  /* Soft festive shadow */
+  box-shadow:
+    0 4px 15px rgba(214, 0, 0, 0.4),
+    inset 0 0 10px rgba(255, 255, 255, 0.8);
+
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+
+  margin: 20px auto;
+}
+.track-title {
+  animation: santaGlow 1.5s infinite alternate;
+}
+
+@keyframes santaGlow {
+  from {
+    box-shadow: 0 0 10px rgba(214, 0, 0, 0.4);
+  }
+  to {
+    box-shadow: 0 0 25px rgba(214, 0, 0, 0.7);
+  }
+}
+
+/* Progress Bar */
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #22c55e, #16a34a);
+  transition: width 0.5s ease-in-out;
+}
+
+/* 🏠 Houses Row */
+.house-row {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+}
+
+/* Each House */
+.house-box {
+  width: 18%;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 10px;
+  color: #ffffff;
+}
+
+/* House Image */
+.house-img {
+  width: 80px;
+  transition: 0.3s;
+}
+
+/* Glow when visited */
+.glow-house {
+  filter: drop-shadow(0 0 12px gold);
+}
+
+/* House Name */
+.house-name {
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 900;
+  margin-top: 5px;
+  color: white;
+
+  font-size: 16px;
+}
+
+/* Waiting Text */
+.wait-msg {
+  color: black; /* yellow */
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Thank You Text */
+
+.thank-msg {
+  font-family: Lobster;
+  font-size: 18px;
+  font-weight: 400;
+  color: #0a7a2f;
+  background-color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  margin-top: 6px;
+}
+
+/* 🎅 Santa Running */
+.santa-run {
+  position: absolute;
+  top: 60%;
+  width: 120px;
+  transition: left 2s linear;
+  background-color: #ffffff; /* 👈 WHITE background */
+  border-radius: 50%;
+  padding: 5px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+}

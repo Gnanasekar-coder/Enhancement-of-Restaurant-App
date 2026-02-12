@@ -14,7 +14,6 @@ const CartItem = ({cartItemDetails}) => {
     dishCurrency,
     dishPrice,
   } = cartItemDetails
-
   const {
     incrementCartItemQuantity,
     decrementCartItemQuantity,
@@ -36,11 +35,21 @@ const CartItem = ({cartItemDetails}) => {
           {dishCurrency} {(quantity * dishPrice).toFixed(2)}
         </p>
         <div className="control-btn-group">
-          <button type="button" className="control-btn" onClick={onDecreaseQty}>
+          <button
+            type="button"
+            className="control-btn"
+            data-testid="cart"
+            onClick={onDecreaseQty}
+          >
             -
           </button>
           <p className="cart-item-quantity">{quantity}</p>
-          <button type="button" className="control-btn" onClick={onIncreaseQty}>
+          <button
+            type="button"
+            className="control-btn"
+            data-testid="cart"
+            onClick={onIncreaseQty}
+          >
             +
           </button>
         </div>

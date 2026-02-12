@@ -7,10 +7,20 @@ import CartContext from '../../context/CartContext'
 
 import './index.css'
 
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
+
 const Home = () => {
-  const [isLoading, setIsLoading] = useState(true)
+  // const [isLoading, setIsLoading] = useState(true)
+  const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial)
   const [response, setResponse] = useState([])
   const [activeCategoryId, setActiveCategoryId] = useState('')
+
+  const [cartItems, setCartItems] = useState([])
 
   const {cartList, setRestaurantName} = useContext(CartContext)
 
@@ -42,10 +52,12 @@ const Home = () => {
     setResponse(updatedData)
     setRestaurantName(data[0].restaurant_name)
     setActiveCategoryId(updatedData[0].menuCategoryId)
-    setIsLoading(false)
+    // setIsLoading(false)
+    setApiStatus(apiStatusConstants.success)
   }
 
   useEffect(() => {
+    setApiStatus(apiStatusConstants.inProgress)
     fetchRestaurantApi()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -53,34 +65,56 @@ const Home = () => {
   const onUpdateActiveCategoryIdx = menuCategoryId =>
     setActiveCategoryId(menuCategoryId)
 
-  const addItemToCart = () => {}
+  const addItemToCart = dish => {
+    const isAlreadyExists = cartItems.find(item => item.dishId === dish.dishId)
+    if (!isAlreadyExists) {
+      const newDish = {...dish, quantity: 1}
+      setCartItems(prev => [...prev, newDish])
+    } else {
+      setCartItems(prev =>
+        prev.map(item =>
+          item.dishId === dish.dishId
+            ? {...item, quantity: item.quantity + 1}
+            : item,
+        ),
+      )
+    }
+  }
 
-  const removeItemFromCart = () => {}
+  const removeItemFromCart = dish => {
+    const isAlreadyExists = cartItems.find(item => item.dishId === dish.dishId)
+    if (isAlreadyExists) {
+      setCartItems(prev =>
+        prev
+          .map(item =>
+            item.dishId === dish.dishId
+              ? {...item, quantity: item.quantity - 1}
+              : item,
+          )
+          .filter(item => item.quantity > 0),
+      )
+    }
+  }
 
   const renderTabMenuList = () =>
-    response.map(eachCategory => {
-      const onClickHandler = () =>
-        onUpdateActiveCategoryIdx(eachCategory.menuCategoryId)
-
-      return (
-        <li
-          className={`each-tab-item ${
-            eachCategory.menuCategoryId === activeCategoryId
-              ? 'active-tab-item'
-              : ''
-          }`}
-          key={eachCategory.menuCategoryId}
-          onClick={onClickHandler}
+    response.map(eachCategory => (
+      <li
+        className={`each-tab-item ${
+          eachCategory.menuCategoryId === activeCategoryId
+            ? 'active-tab-item'
+            : ''
+        }`}
+        key={eachCategory.menuCategoryId}
+      >
+        <button
+          type="button"
+          className="mt-0 mb-0 ms-2 me-2 tab-category-button"
+          onClick={() => onUpdateActiveCategoryIdx(eachCategory.menuCategoryId)}
         >
-          <button
-            type="button"
-            className="mt-0 mb-0 ms-2 me-2 tab-category-button"
-          >
-            {eachCategory.menuCategory}
-          </button>
-        </li>
-      )
-    })
+          {eachCategory.menuCategory}
+        </button>
+      </li>
+    ))
 
   const renderDishes = () => {
     const {categoryDishes} = response.find(
@@ -93,6 +127,7 @@ const Home = () => {
           <DishItem
             key={eachDish.dishId}
             dishDetails={eachDish}
+            cartItems={cartItems}
             addItemToCart={addItemToCart}
             removeItemFromCart={removeItemFromCart}
           />
@@ -107,13 +142,19 @@ const Home = () => {
     </div>
   )
 
-  return isLoading ? (
-    renderSpinner()
-  ) : (
-    <div className="home-background">
-      <Header cartItems={cartList} />
-      <ul className="m-0 ps-0 d-flex tab-container">{renderTabMenuList()}</ul>
-      {renderDishes()}
+  return (
+    <div>
+      {apiStatus === apiStatusConstants.inProgress && renderSpinner()}
+      {apiStatus === apiStatusConstants.success && (
+        <div className="home-background">
+          <Header cartItems={cartList} />
+          <ul className="m-0 ps-0 d-flex tab-container">
+            {renderTabMenuList()}
+          </ul>
+          {renderDishes()}
+        </div>
+      )}
+      {apiStatus === apiStatusConstants.failure && <p>Something went wrong!</p>}
     </div>
   )
 }

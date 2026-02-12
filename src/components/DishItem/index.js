@@ -29,18 +29,28 @@ const DishItem = ({dishDetails}) => {
 
   const renderControllerButton = () => (
     <div className="controller-container d-flex align-items-center bg-success">
-      <button className="button" type="button" onClick={onDecreaseQuantity}>
+      <button
+        className="button"
+        type="button"
+        data-testid="minus"
+        onClick={onDecreaseQuantity}
+      >
         -
       </button>
       <p className="quantity">{quantity}</p>
-      <button className="button" type="button" onClick={onIncreaseQuantity}>
+      <button
+        className="button"
+        type="button"
+        data-testid="plus"
+        onClick={onIncreaseQuantity}
+      >
         +
       </button>
     </div>
   )
 
   return (
-    <li className="mb-3 p-3 dish-item-container d-flex">
+    <li className="dish-item-container d-flex">
       <div
         className={`veg-border ${dishType === 1 ? 'non-veg-border' : ''} me-3`}
       >
@@ -54,17 +64,15 @@ const DishItem = ({dishDetails}) => {
         <p className="dish-description">{dishDescription}</p>
         {dishAvailability && renderControllerButton()}
         {!dishAvailability && (
-          <p className="not-availability-text text-danger">Not available</p>
+          <p className="not-availability-text">Not available</p>
         )}
         {addonCat.length !== 0 && (
-          <p className="addon-availability-text mb-0">
-            Customizations available
-          </p>
+          <p className="addon-availability-text">Customizations available</p>
         )}
         {quantity > 0 && (
           <button
             type="button"
-            className="btn btn-outline-primary mt-3"
+            className="btn btn-outline-primary"
             onClick={onAddItemToCart}
           >
             ADD TO CART
@@ -72,7 +80,7 @@ const DishItem = ({dishDetails}) => {
         )}
       </div>
 
-      <p className="dish-calories text-warning">{dishCalories} calories</p>
+      <p className="dish-calories">{dishCalories} calories</p>
       <img className="dish-image" alt={dishName} src={dishImage} />
     </li>
   )
