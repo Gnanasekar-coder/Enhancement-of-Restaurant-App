@@ -21,6 +21,7 @@ const Home = () => {
   const [activeCategoryId, setActiveCategoryId] = useState('')
 
   const [cartItems, setCartItems] = useState([])
+  const [error, setErrorMsg] = useState('')
 
   const {cartList, setRestaurantName} = useContext(CartContext)
 
@@ -44,20 +45,24 @@ const Home = () => {
     }))
 
   const fetchRestaurantApi = async () => {
-    const api =
-      'https://apis2.ccbp.in/restaurant-app/restaurant-menu-list-details'
-    const apiResponse = await fetch(api)
-    const data = await apiResponse.json()
-    const updatedData = getUpdatedData(data[0].table_menu_list)
-    setResponse(updatedData)
-    setRestaurantName(data[0].restaurant_name)
-    setActiveCategoryId(updatedData[0].menuCategoryId)
-    // setIsLoading(false)
-    setApiStatus(apiStatusConstants.success)
+    setApiStatus(apiStatusConstants.inProgress)
+    try {
+      const api =
+        'https://apis2.ccbp.in/restaurant-app/restaurant-menu-list-details'
+      const apiResponse = await fetch(api)
+      const data = await apiResponse.json()
+      const updatedData = getUpdatedData(data[0].table_menu_list)
+      setResponse(updatedData)
+      setRestaurantName(data[0].restaurant_name)
+      setActiveCategoryId(updatedData[0].menuCategoryId)
+      setApiStatus(apiStatusConstants.success)
+    } catch (err) {
+      setApiStatus(apiStatusConstants.failure)
+      setErrorMsg(err.message)
+    }
   }
 
   useEffect(() => {
-    setApiStatus(apiStatusConstants.inProgress)
     fetchRestaurantApi()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -154,7 +159,9 @@ const Home = () => {
           {renderDishes()}
         </div>
       )}
-      {apiStatus === apiStatusConstants.failure && <p>Something went wrong!</p>}
+      {apiStatus === apiStatusConstants.failure && (
+        <p className="text-warning text-center">{error}</p>
+      )}
     </div>
   )
 }
